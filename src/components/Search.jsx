@@ -1,31 +1,29 @@
-// var Search = (props) => (
-//   <div className="search-bar form-inline">
-//     <input className="form-control" type="text" />
-//     <button className="btn hidden-sm-down" onClick={handleClick}>
-//       <span className="glyphicon glyphicon-search"></span>
-//     </button>
-//   </div> 
-
-// );
-
 class Search extends React.Component {
   
   constructor(props) {
     super(props);
+    this.state = {
+      inputValue: ''
+    };
   }
+  
+  handleInput(e) {
+    this.setState({inputValue: e.target.value});
+  }
+  
   handleClick() {
-    console.log('button clicked')
+    this.props.handler(this.state.inputValue);
   }
   
   render() {
     return (
       <div className="search-bar form-inline">
-        <input className="form-control" type="text" />
-        <button className="btn hidden-sm-down" onClick={this.handleClick}>
+        <input className="form-control" value={this.state.inputValue} onChange={this.handleInput.bind(this)} type="text" />
+        <button className="btn hidden-sm-down" onClick={this.handleClick.bind(this)}>
           <span className="glyphicon glyphicon-search"></span>
         </button>
       </div> 
-    )
+    );
   }
 
 }

@@ -3,9 +3,11 @@ var searchYouTube = (options, callback) => {
   var dataObj = {
     'maxResults': options.max || 5,
     'part': 'snippet',
-    'q': options.query,
-    'key': 'AIzaSyBe58Aiy_fVkabHVvU3TcofQDALDe08SAQ',
-    'chart': 'mostPopular'
+    'q': options.query || '',
+    'key': options.key || 'AIzaSyBe58Aiy_fVkabHVvU3TcofQDALDe08SAQ',
+    'chart': 'mostPopular',
+    'videoEmbeddable': true,
+    'type': 'video'
   };  
   
   $.ajax({

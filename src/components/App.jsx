@@ -1,19 +1,36 @@
 class App extends React.Component {
 
-  constructor(props) {
+  constructor(props) {    
     super(props);
     this.state = {
-      videos: this.props.videos,
-      video: this.props.videos[0]
+      videos: [
+      {snippet: {thumbnails: {default: {url: 'www.youtube.com'}}}, title: 'youtube', description: 'description'},
+      {snippet: {thumbnails: {default: {url: 'www.youtube.com'}}}, title: 'youtube', description: 'description'},
+      {snippet: {thumbnails: {default: {url: 'www.youtube.com'}}}, title: 'youtube', description: 'description'},
+      {snippet: {thumbnails: {default: {url: 'www.youtube.com'}}}, title: 'youtube', description: 'description'},
+      {snippet: {thumbnails: {default: {url: 'www.youtube.com'}}}, title: 'youtube', description: 'description'}
+      ],
+      video: {id: {videoId: 'id'}, snippet: {thumbnails: {default: {url: 'www.youtube.com'}}}, title: 'youtube', description: 'description'}
     };
+  }
+  
+  componentWillMount() {
+    searchYouTube({query: 'hello', max: 5}, (function(data) {
+      console.log(data.items);
+      this.setState({videos: data.items, video: data.items[0]});
+    }).bind(this));   
   }
   
   onSearch(input) {
     
-    console.log(1);
-    window.searchYouTube({query: input, max: 5}, function(data) {
-      console.log(data);
-    });
+    searchYouTube({query: input, max: 5}, (function(data) {
+      console.log(data.items);
+      this.setState({videos: data.items, video: data.items[0]});
+    }).bind(this));
+  }
+  
+  onTitleClick(videoInfo) {
+    this.setState({video: videoInfo});
   }
   
   render() {
@@ -29,7 +46,7 @@ class App extends React.Component {
             <VideoPlayer video={this.state.video}/> 
           </div>
           <div className="col-md-5">
-            <VideoList videos={this.state.videos}/>
+            <VideoList videos={this.state.videos} handler={this.onTitleClick.bind(this)} />
           </div>
         </div>
       </div>
@@ -43,4 +60,5 @@ class App extends React.Component {
 // In the ES6 spec, files are "modules" and do not share a top-level scope
 // `var` declarations will only exist globally where explicitly defined
 window.App = App;
-ReactDOM.render(<App videos={exampleVideoData}/>, document.getElementById('app'));
+
+ReactDOM.render(<App />, document.getElementById('app'));
