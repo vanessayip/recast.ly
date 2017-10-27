@@ -99,3 +99,21 @@ h5 {
     margin-right: 20px;
   }
 }
+
+.titleLeft {
+  float: left;
+  width: 50%;
+}
+
+.statsRight {
+  float: right;
+  width: 50%;
+}
+
+#like {
+  float:left;
+  width: 40%;
+}
+#dislike {
+  float:right;
+}
