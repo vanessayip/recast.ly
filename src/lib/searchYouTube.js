@@ -47,6 +47,29 @@ var searchYouTubeVideo = (videoId, callback) => {
   });
 };
 
+var searchYouTubeVideo1 = (videoId, callback) => {
+
+  $.get('https://www.googleapis.com/youtube/v3/videos', {
+    //data object
+    'key': 'AIzaSyBe58Aiy_fVkabHVvU3TcofQDALDe08SAQ',
+    'id': videoId,
+    'type': 'video',
+    'part': 'snippet, contentDetails, statistics'}
+  )
+    //es6 destructuring. know that what comes back is going to be normally stored in data.items, so becomes {items}
+    .done(({items}) => {
+      if (callback) {
+        console.log('success in searching for specific video');
+        callback(items);
+      }
+    }) 
+    .fail(({responseJSON}) => {
+      console.log('failed in searching for specific video');
+      responseJSON.error.errors.forEach((err) => console.error(err));
+    });
+  
+};
+
 var searchYouTube = _.debounce(searchYouTube1, 500);
 
 window.searchYouTube = searchYouTube;
